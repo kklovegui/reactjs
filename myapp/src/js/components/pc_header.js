@@ -1,23 +1,47 @@
 import React from 'react';
 import {Row, Col} from 'antd';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Tabs, Form, Input, Button, Checkbox, Modal } from 'antd';
 import news from '../../images/news.png'
+import { Link } from 'react-router-dom';
 import './../../css/pc_header.css';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
-
+const FormItem = Form.Item;
 
 class PcHeader extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            current: 'top'
+            current: 'top',
+            modalVisible: false,
+            action: 'login',
+            hasLogined: false,
+            userNickName: '',
+            userid: 0,
         }
     }
 
     render() {
+        let { getFieldProps } = this.props.form;
+        const userShow = this.state.hasLogined ?
+            <Menu.Item key="logout" className="register">
+                <Button type="primary" htmlType="button">
+                    {this.state.userNickName}
+                </Button>
+                &nbsp;&nbsp;
+                <Link target="_blank">
+                    <Button type="dashed" htmlType="button">个人中心</Button>
+                </Link>
+                &nbsp;&nbsp;
+                <Button type="ghost" htmlType="button">退出</Button>
+            </Menu.Item>
+            :
+            <Menu.Item key='register' className='register'>
+                <Icon type='appstore'/>注册/登录
+            </Menu.Item>;
+
         return(
             <header>
                 <Row>
@@ -54,9 +78,17 @@ class PcHeader extends React.Component {
                             <Menu.Item key="shishang">
                                 <Icon type="appstore"/>时尚
                             </Menu.Item>
+                            {userShow}
                         </Menu>
 
                     </Col>
+
+                    <Modal title="用户中心"
+                           wrapClassName="vertical-center-modal"
+                           visible={this.state.modalVisible}
+                           onCancel={()=>this.setModalVisible(false)}
+                           onOk={()=>this.setModalVisible(false) okText="关闭"}
+                            />
                     <Col span={2}/>
                 </Row>
             </header>
@@ -64,4 +96,4 @@ class PcHeader extends React.Component {
     };
 }
 
-export default PcHeader;
+export default PcHeader = Form.create({})(PcHeader);

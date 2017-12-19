@@ -9,7 +9,9 @@
     "react-mixin": "^4.0.0",
     "react-responsive": "^4.0.3",
     "react-router": "^4.2.0",
-    "react-scripts": "1.0.17"
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "react-app-rewired start",
