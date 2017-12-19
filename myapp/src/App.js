@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 import './App.css';
 import { Button } from 'antd';
 import PcHeader from "./js/components/pc_header";
+import MobileHeader from './js/components/mobile_header';
 // import Button from 'antd/lib/button';
+
+import MediaQuery from 'react-responsive';
 
 class App extends Component {
     render() {
         return (
             <div>
-                <PcHeader/>
+                <MediaQuery query='(min-device-width: 1224px)'>
+                    <PcHeader/>
+                </MediaQuery>
+
+                <MediaQuery query='(max-device-width: 1224px)'>
+                    <MobileHeader/>
+                </MediaQuery>
             </div>
         );
     }
