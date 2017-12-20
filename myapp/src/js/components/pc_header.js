@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col} from 'antd';
-import { Menu, Icon, Tabs, Form, Input, Button, Checkbox, Modal } from 'antd';
+import { Menu, Icon, Tabs, Form, Input, Button, Checkbox, Modal, message } from 'antd';
 import news from '../../images/news.png'
 import { Link } from 'react-router-dom';
 import './../../css/pc_header.css';
@@ -41,7 +41,19 @@ class PcHeader extends React.Component {
     };
 
     handleSubmit(e){
+        e.preventDefault();
+        var myFetchOptions = {
+            method: 'GET'
+        };
 
+        var formData = this.props.form.getFieldsValue();
+        console.log(formData);
+        fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=register&username=userName&password=password&r_userName="+formData.r_userName+"&r_password="+formData.r_password+"&r_confirmPassword="+formData.r_confirmPassword,myFetchOptions).
+        then(response=>response.json()).then(json=>{
+            this.setState({userNickName:json.NickUserName,userid:json.UserId});
+        });
+        message.success('请求成功');
+        this.setModalVisible(false);
     }
 
     render() {
@@ -114,7 +126,7 @@ class PcHeader extends React.Component {
                     >
                         <Tabs type='card'>
                             <TabPane tab='注册' key='2'>
-                                <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+                                <Form horizontal='true' onSubmit={this.handleSubmit.bind(this)}>
                                     <FormItem label='账户'>
                                         <Input placeholder='请输入账户' {...getFieldProps('r_userName')}/>
                                     </FormItem>
